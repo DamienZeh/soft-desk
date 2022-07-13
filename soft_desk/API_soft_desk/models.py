@@ -18,3 +18,78 @@ class Projects(models.Model):
     author_user_id = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
+
+
+class Contributors(models.Model):
+    """Model for Contributor"""
+
+    PERMISSION = [("read", "read"), ("total", "total")]
+    ROLE = [
+        ("auteur", "auteur"),
+        ("responsable", "responsable"),
+        ("manager", "manager"),
+    ]
+
+    user_id = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    project_id = models.ForeignKey(
+        to=Projects, on_delete=models.CASCADE, blank=True, null=True
+    )
+    permission = models.CharField(max_length=10, choices=PERMISSION)
+    role = models.CharField(
+        max_length=150, choices=ROLE, null=False, blank=False
+    )
+
+
+class Issues(models.Model):
+    """Model for Issues"""
+
+    PRIORITY_CHOICES = (
+        ("faible", "faible"),
+        ("moyen", "moyen"),
+        ("urgent", "urgent"),
+    )
+    TAG_CHOICES = (
+        ("bug", "bug"),
+        ("amélioration", "amélioration"),
+        ("tâche", "tâche"),
+    )
+    STATUS_CHOICES = (
+        ("à faire", "à faire"),
+        ("en cours", "en cours"),
+        ("terminé", "terminé"),
+    )
+    title = models.CharField(max_length=100)
+    description = models.TextField(max_length=500)
+    tag = models.CharField(max_length=15, choices=TAG_CHOICES)
+    priority = models.CharField(max_length=15, choices=PRIORITY_CHOICES)
+    project = models.ForeignKey(to=Projects, on_delete=models.CASCADE)
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES)
+    author_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    assigned_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        related_name="assignee_issue",
+        null=True,
+    )
+    created_time = models.DateTimeField(auto_now_add=True)
+
+
+class Comments(models.Model):
+    """Model for Comments"""
+
+    description = models.CharField(max_length=200)
+    author_user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    issue = models.ForeignKey(to=Issues, on_delete=models.CASCADE)
+    created_time = models.DateTimeField(auto_now_add=True)
