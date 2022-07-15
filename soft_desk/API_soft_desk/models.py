@@ -23,7 +23,7 @@ class Projects(models.Model):
 class Contributors(models.Model):
     """Model for Contributor"""
 
-    PERMISSION = [("read", "read"), ("total", "total")]
+    POSSIBILITIES = [("read", "read"), ("total", "total")]
     ROLE = [
         ("auteur", "auteur"),
         ("responsable", "responsable"),
@@ -39,7 +39,7 @@ class Contributors(models.Model):
     project_id = models.ForeignKey(
         to=Projects, on_delete=models.CASCADE, blank=True, null=True
     )
-    permission = models.CharField(max_length=10, choices=PERMISSION)
+    permission = models.CharField(max_length=10, choices=POSSIBILITIES)
     role = models.CharField(
         max_length=150, choices=ROLE, null=False, blank=False
     )

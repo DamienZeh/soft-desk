@@ -24,7 +24,6 @@ router = routers.SimpleRouter()
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api-auth/", include("rest_framework.urls")),
     path("", include("authentication.urls")),
     # path("api/", include(router.urls)),
 ]
