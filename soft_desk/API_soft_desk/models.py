@@ -26,8 +26,7 @@ class Contributors(models.Model):
     POSSIBILITIES = [("read", "read"), ("total", "total")]
     ROLE = [
         ("auteur", "auteur"),
-        ("responsable", "responsable"),
-        ("manager", "manager"),
+        ("collaborateur", "collaborateur"),
     ]
 
     user_id = models.ForeignKey(
