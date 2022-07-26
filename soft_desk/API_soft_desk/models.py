@@ -16,8 +16,21 @@ class Projects(models.Model):
     description = models.CharField(max_length=250)
     type = models.CharField(max_length=30, choices=CHOICES_TYPE)
     author_user_id = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="author_id_project",
     )
+    contributor = models.ManyToManyField(
+        to=settings.AUTH_USER_MODEL,
+        through="Contributors",
+        related_name="contributors",
+    )
+
+    def __str__(self):
+        """
+        get title for show it, in admin pages
+        """
+        return self.title
 
 
 class Contributors(models.Model):
@@ -34,6 +47,7 @@ class Contributors(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
+        related_name="user_id_contributor",
     )
     project_id = models.ForeignKey(
         to=Projects, on_delete=models.CASCADE, blank=True, null=True
@@ -81,6 +95,12 @@ class Issues(models.Model):
     )
     created_time = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        """
+        get title for show it, in admin pages
+        """
+        return self.title
+
 
 class Comments(models.Model):
     """Model for Comments"""
@@ -92,3 +112,9 @@ class Comments(models.Model):
     )
     issue = models.ForeignKey(to=Issues, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """
+        get title for show it, in admin pages
+        """
+        return self.description
