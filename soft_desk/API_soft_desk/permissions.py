@@ -4,7 +4,7 @@ from .models import Projects, Contributors
 
 class IsAuthorAuthenticated(BasePermission):
     def has_object_permission(self, request, view, obj):
-        # new project allowed if user is registered
+        # anyone authenticated, can create a project
         if request.method == "POST":
             return True
 

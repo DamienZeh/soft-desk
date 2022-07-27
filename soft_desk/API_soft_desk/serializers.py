@@ -12,7 +12,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Projects
-        fields = ["title", "description", "type", "contributor"]
+        fields = ["title", "description", "type"]
 
 
 class ProjectListSerializer(serializers.ModelSerializer):
@@ -22,6 +22,11 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
 
 class ContributorSerializer(serializers.ModelSerializer):
+    def validate_user_id(self, value):
+        if Contributors.objects.filter(user_id=value).exists():
+            raise serializers.ValidationError("User already added.")
+        return value
+
     class Meta:
         model = Contributors
         fields = ["user_id", "project_id", "role", "permission"]

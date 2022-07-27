@@ -20,7 +20,7 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectDetailSerializer
 
     def get_queryset(self):
-        return Projects.objects.filter(author_user_id=self.request.user)
+        return Projects.objects.filter(contributor=self.request.user)
 
     def list(self, request):
         queryset = self.get_queryset()

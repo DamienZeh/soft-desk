@@ -23,7 +23,7 @@ class Projects(models.Model):
     contributor = models.ManyToManyField(
         to=settings.AUTH_USER_MODEL,
         through="Contributors",
-        related_name="contributors",
+        related_name="contributions",
     )
 
     def __str__(self):
@@ -52,7 +52,9 @@ class Contributors(models.Model):
     project_id = models.ForeignKey(
         to=Projects, on_delete=models.CASCADE, blank=True, null=True
     )
-    permission = models.CharField(max_length=10, choices=POSSIBILITIES, null=False, blank=False)
+    permission = models.CharField(
+        max_length=10, choices=POSSIBILITIES, null=False, blank=False
+    )
     role = models.CharField(
         max_length=150, choices=ROLE, null=False, blank=False
     )
