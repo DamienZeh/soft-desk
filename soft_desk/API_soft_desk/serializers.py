@@ -1,6 +1,7 @@
+from pyexpat import model
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Projects
+from .models import Projects, Contributors
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
@@ -11,10 +12,16 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Projects
-        fields = ["title", "description", "type"]
+        fields = ["title", "description", "type", "contributor"]
 
 
 class ProjectListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
         fields = ["title"]
+
+
+class ContributorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contributors
+        fields = ["user_id", "project_id", "role", "permission"]

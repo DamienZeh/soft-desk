@@ -5,9 +5,14 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import Projects, Contributors
-
-from .serializers import ProjectListSerializer, ProjectDetailSerializer
-from .permissions import IsAuthorAuthenticated
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from .serializers import (
+    ProjectListSerializer,
+    ProjectDetailSerializer,
+    ContributorSerializer,
+)
+from .permissions import IsAuthorAuthenticated, IsContributorAuthenticated
 
 
 class ProjectViewSet(ModelViewSet):
@@ -15,9 +20,7 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectDetailSerializer
 
     def get_queryset(self):
-        return Projects.objects.filter(
-            author_user_id=self.request.user
-        )  # et ou contributeur, à rajouter
+        return Projects.objects.filter(author_user_id=self.request.user)
 
     def list(self, request):
         queryset = self.get_queryset()
@@ -34,21 +37,27 @@ class ProjectViewSet(ModelViewSet):
         )
         contributor.save()
 
-    def perform_update(self, serializer, *args, **kwargs):
-        serializer.save(author_user_id=self.request.user)
 
-    def perform_delete(self, serializer, *args, **kwargs):
-        serializer.save(author_user_id=self.request.user)
-
-    """
-    if user = author_user_id:
-        alors on peut delete/update
-    """
-
-
-"""class RetrieveProjectDetails(RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = ProjectDetailSerializer
+class ContributorsViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, IsContributorAuthenticated]
+    serializer_class = ContributorSerializer
 
     def get_queryset(self):
-        return Projects.objects.get(author_user_id=self.request.user)"""
+        # check if user is contributor
+        try:
+            contributor_exist = Contributors.objects.get(
+                Q(project_id=self.kwargs["project_pk"])
+                & Q(user_id=self.request.user)
+            )
+            if contributor_exist:
+                return Contributors.objects.filter(
+                    project_id=self.kwargs["project_pk"]
+                )
+
+        except Contributors.DoesNotExist:
+            print("Vous n'êtes pas un contributeur du projet.")
+
+    def perform_create(self, serializer):
+        # Get project_id and linked project to contributor
+        project = get_object_or_404(Projects, id=self.kwargs["project_pk"])
+        serializer.save(project_id=project)

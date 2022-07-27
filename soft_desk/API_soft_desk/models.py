@@ -52,7 +52,7 @@ class Contributors(models.Model):
     project_id = models.ForeignKey(
         to=Projects, on_delete=models.CASCADE, blank=True, null=True
     )
-    permission = models.CharField(max_length=10, choices=POSSIBILITIES)
+    permission = models.CharField(max_length=10, choices=POSSIBILITIES, null=False, blank=False)
     role = models.CharField(
         max_length=150, choices=ROLE, null=False, blank=False
     )
