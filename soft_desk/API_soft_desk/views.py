@@ -1,22 +1,31 @@
-from django.shortcuts import render
-from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
+from django.conf import settings
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError
 from .models import Projects, Contributors
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
 from .serializers import (
     ProjectListSerializer,
     ProjectDetailSerializer,
-    ContributorSerializer,
+    ContributorDetailSerializer,
+    ContributorListSerializer,
 )
-from .permissions import IsAuthorAuthenticated, IsContributorAuthenticated
+from .permissions import (
+    IsAuthorOrUserAuthenticated,
+    IsContributorNotAuthorAuthenticated,
+    IsContributorAuthorAuthenticated,
+)
 
 
 class ProjectViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated, IsAuthorAuthenticated]
+    permission_classes = [
+        IsAuthenticated,
+        IsAuthorOrUserAuthenticated,
+        IsContributorNotAuthorAuthenticated,
+    ]
     serializer_class = ProjectDetailSerializer
 
     def get_queryset(self):
@@ -39,8 +48,12 @@ class ProjectViewSet(ModelViewSet):
 
 
 class ContributorsViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated, IsContributorAuthenticated]
-    serializer_class = ContributorSerializer
+    permission_classes = [
+        IsAuthenticated,
+        IsContributorNotAuthorAuthenticated,
+        IsContributorAuthorAuthenticated,
+    ]
+    serializer_class = ContributorDetailSerializer
 
     def get_queryset(self):
         # check if user is contributor
@@ -53,11 +66,47 @@ class ContributorsViewSet(ModelViewSet):
                 return Contributors.objects.filter(
                     project_id=self.kwargs["project_pk"]
                 )
-
         except Contributors.DoesNotExist:
-            print("Vous n'êtes pas un contributeur du projet.")
+            error_message = f"you're not contributor of this project."
+            raise ValidationError(error_message)
+
+    def get_permissions(self):
+        if (
+            self.request.method == "POST"
+            or self.request.method == "DELETE"
+            or self.request.method == "PUT"
+        ):
+            permission_classes = [
+                IsAuthenticated,
+                IsContributorAuthorAuthenticated,
+            ]
+        else:
+            permission_classes = [
+                IsAuthenticated,
+                IsContributorNotAuthorAuthenticated,
+            ]
+        return [permission() for permission in permission_classes]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = ContributorListSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def perform_create(self, serializer):
         # Get project_id and linked project to contributor
+        target_user_id = self.request.data["user_id"]
         project = get_object_or_404(Projects, id=self.kwargs["project_pk"])
-        serializer.save(project_id=project)
+
+        if Contributors.objects.filter(
+            project_id=project, user_id=target_user_id
+        ).exists():
+            error_message = f"user {target_user_id} is already contributor of project {project}."
+            raise ValidationError(error_message)
+        else:
+            serializer.save(project_id=project)
+
+    def destroy(self, request, *args, **kwargs):
+        if Contributors.objects.get(pk=kwargs["pk"]).user_id == request.user:
+            error_message = {"message": "You cannot delete yourself."}
+            raise ValidationError(error_message)
+        return super().destroy(request, *args, **kwargs)

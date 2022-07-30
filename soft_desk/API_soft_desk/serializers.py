@@ -21,12 +21,13 @@ class ProjectListSerializer(serializers.ModelSerializer):
         fields = ["title"]
 
 
-class ContributorSerializer(serializers.ModelSerializer):
-    def validate_user_id(self, value):
-        if Contributors.objects.filter(user_id=value).exists():
-            raise serializers.ValidationError("User already added.")
-        return value
-
+class ContributorDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contributors
         fields = ["user_id", "project_id", "role", "permission"]
+
+
+class ContributorListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contributors
+        fields = ["user_id"]

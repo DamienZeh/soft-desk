@@ -36,7 +36,7 @@ class Projects(models.Model):
 class Contributors(models.Model):
     """Model for Contributor"""
 
-    POSSIBILITIES = [("read", "read"), ("total", "total")]
+    POSSIBILITIES = [("lecture_seule", "lecture_seule"), ("total", "total")]
     ROLE = [
         ("auteur", "auteur"),
         ("collaborateur", "collaborateur"),
@@ -53,7 +53,7 @@ class Contributors(models.Model):
         to=Projects, on_delete=models.CASCADE, blank=True, null=True
     )
     permission = models.CharField(
-        max_length=10, choices=POSSIBILITIES, null=False, blank=False
+        max_length=13, choices=POSSIBILITIES, null=False, blank=False
     )
     role = models.CharField(
         max_length=150, choices=ROLE, null=False, blank=False
