@@ -5,12 +5,7 @@ from .models import Contributors, Projects, Issues, Comments
 class ProjectAdmin(admin.ModelAdmin):
     """Show project's info in admin"""
 
-    list_display = (
-        "title",
-        "description",
-        "type",
-        "author_user_id"        
-    )
+    list_display = ("title", "description", "type", "author_user_id")
 
 
 class IssueAdmin(admin.ModelAdmin):
@@ -21,10 +16,10 @@ class IssueAdmin(admin.ModelAdmin):
         "description",
         "tag",
         "priority",
-        "project",
+        "project_id",
         "status",
-        "author_user",
-        "assigned_user",
+        "author_user_id",
+        "assignee_user_id",
         "created_time",
     )
 
@@ -34,8 +29,8 @@ class CommentAdmin(admin.ModelAdmin):
 
     list_display = (
         "description",
-        "author_user",
-        "issue",
+        "author_user_id",
+        "issue_id",
         "created_time",
     )
 

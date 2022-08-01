@@ -82,14 +82,14 @@ class Issues(models.Model):
     description = models.TextField(max_length=500)
     tag = models.CharField(max_length=15, choices=TAG_CHOICES)
     priority = models.CharField(max_length=15, choices=PRIORITY_CHOICES)
-    project = models.ForeignKey(to=Projects, on_delete=models.CASCADE)
+    project_id = models.ForeignKey(to=Projects, on_delete=models.CASCADE)
     status = models.CharField(max_length=15, choices=STATUS_CHOICES)
-    author_user = models.ForeignKey(
+    author_user_id = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
     )
-    assigned_user = models.ForeignKey(
+    assignee_user_id = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         related_name="assignee_issue",
@@ -108,11 +108,11 @@ class Comments(models.Model):
     """Model for Comments"""
 
     description = models.CharField(max_length=200)
-    author_user = models.ForeignKey(
+    author_user_id = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    issue = models.ForeignKey(to=Issues, on_delete=models.CASCADE)
+    issue_id = models.ForeignKey(to=Issues, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
