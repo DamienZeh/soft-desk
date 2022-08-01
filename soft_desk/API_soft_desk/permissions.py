@@ -14,17 +14,6 @@ class IsAuthorOrUserAuthenticated(BasePermission):
                 return True
 
 
-"""class IsContributorOrAuthorAuthenticated(BasePermission):
-     def has_object_permission(self, request, view, obj):
-        if request.method == "GET" or request.method == "POST":
-            return True
-        elif request.method in ["PUT", "DELETE"]:
-            if request.user == obj.author_user_id:
-                return True
-            else:
-                return False"""
-
-
 class IsContributorNotAuthorAuthenticated(BasePermission):
     def has_permission(self, request, view):
         try:
@@ -63,6 +52,14 @@ class IsAuthorIssueAuthenticated(BasePermission):
             return True
         elif request.method in ["PUT", "DELETE"]:
             if request.user == obj.assignee_user_id:
+                return True
+
+class IsAuthorCommentAuthenticated(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method == "GET" or request.method == "POST":
+            return True
+        elif request.method in ["PUT", "DELETE"]:
+            if request.user == obj.author_user_id:
                 return True
 
 

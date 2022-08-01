@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
-from .models import Projects, Contributors, Issues
+from .models import Projects, Contributors, Issues, Comments
 from .serializers import (
     ProjectListSerializer,
     ProjectDetailSerializer,
@@ -14,12 +14,15 @@ from .serializers import (
     ContributorListSerializer,
     IssueDetailSerializer,
     IssueListSerializer,
+    CommentListSerializer,
+    CommentDetailSerializer,
 )
 from .permissions import (
     IsAuthorOrUserAuthenticated,
     IsContributorNotAuthorAuthenticated,
     IsContributorAuthorAuthenticated,
-    IsAuthorIssueAuthenticated
+    IsAuthorIssueAuthenticated,
+    IsAuthorCommentAuthenticated,
 )
 
 
@@ -49,7 +52,7 @@ class ProjectViewSet(ModelViewSet):
 class ContributorsViewSet(ModelViewSet):
     serializer_class = ContributorDetailSerializer
 
-    def get_queryset(self):       
+    def get_queryset(self):
         try:
             contributor_exist = Contributors.objects.get(
                 Q(project_id=self.kwargs["project_pk"])
@@ -62,7 +65,7 @@ class ContributorsViewSet(ModelViewSet):
         except Contributors.DoesNotExist:
             error_message = f"you're not contributor of this project."
             raise ValidationError(error_message)
-    
+
     def get_permissions(self):
         if (
             self.request.method == "POST"
@@ -125,17 +128,15 @@ class IssueViewSet(ModelViewSet):
             raise ValidationError(error_message)
 
     def get_permissions(self):
-        if  self.request.method == "POST":
+        if self.request.method == "POST":
             IsAuthenticated, IsContributorAuthorAuthenticated,
             IsContributorNotAuthorAuthenticated
 
-        if (self.request.method == "DELETE"
-            or self.request.method == "PUT"
-        ):
+        if self.request.method == "DELETE" or self.request.method == "PUT":
             permission_classes = [
-                IsAuthenticated,          
-                IsAuthorIssueAuthenticated
-            ]#il faut une permission si on est assignee ou author du pb
+                IsAuthenticated,
+                IsAuthorIssueAuthenticated,
+            ]  # il faut une permission si on est assignee ou author du pb
         else:
             permission_classes = [
                 IsAuthenticated,
@@ -148,6 +149,50 @@ class IssueViewSet(ModelViewSet):
         serializer = IssueListSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def perform_create(self, serializer):        
+    def perform_create(self, serializer):
         project = get_object_or_404(Projects, id=self.kwargs["project_pk"])
         serializer.save(project_id=project, assignee_user_id=self.request.user)
+
+
+class CommentViewSet(ModelViewSet):
+    serializer_class = CommentDetailSerializer
+
+    def get_queryset(self):
+        try:
+            contributor_exist = Contributors.objects.get(
+                Q(project_id=self.kwargs["project_pk"])
+                & Q(user_id=self.request.user)
+            )
+            if contributor_exist:
+                return Comments.objects.filter(
+                    project_id=self.kwargs["project_pk"]
+                )
+        except Contributors.DoesNotExist:
+            error_message = f"you're not contributor of this project."
+            raise ValidationError(error_message)
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            IsAuthenticated, IsContributorAuthorAuthenticated,
+            IsContributorNotAuthorAuthenticated
+
+        if self.request.method == "DELETE" or self.request.method == "PUT":
+            permission_classes = [
+                IsAuthenticated,
+                IsAuthorCommentAuthenticated,
+            ]  # il faut une permission si on est assignee ou author du pb
+        else:
+            permission_classes = [
+                IsAuthenticated,
+                IsContributorNotAuthorAuthenticated,
+            ]
+        return [permission() for permission in permission_classes]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = CommentListSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        issue = get_object_or_404(Issues, id=self.kwargs["issue_pk"])
+        serializer.save(issue_id=issue, author_user_id=self.request.user)

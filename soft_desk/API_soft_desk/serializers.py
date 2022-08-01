@@ -1,7 +1,8 @@
 from pyexpat import model
+from xml.etree.ElementTree import Comment
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Projects, Contributors, Issues
+from .models import Comments, Projects, Contributors, Issues
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
@@ -55,3 +56,18 @@ class IssueListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issues
         fields = ["title", "status"]
+
+
+class CommentDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comments
+        fields = [            
+            "description",      
+            "created_time"
+        ]
+
+
+class CommentListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comments
+        fields = ["description",]
