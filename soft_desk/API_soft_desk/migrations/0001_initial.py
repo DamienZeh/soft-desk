@@ -15,13 +15,38 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Projects',
+            name="Projects",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('description', models.CharField(max_length=250)),
-                ('type', models.CharField(choices=[('front-end', 'front-end'), ('back-end', 'back-end'), ('android', 'android'), ('iOS', 'iOS')], max_length=30)),
-                ('author_user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=200)),
+                ("description", models.CharField(max_length=250)),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("front-end", "front-end"),
+                            ("back-end", "back-end"),
+                            ("android", "android"),
+                            ("iOS", "iOS"),
+                        ],
+                        max_length=30,
+                    ),
+                ),
+                (
+                    "author_user_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

@@ -6,23 +6,23 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('API_soft_desk', '0010_alter_contributors_permission'),
+        ("API_soft_desk", "0010_alter_contributors_permission"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='issues',
-            old_name='assigned_user',
-            new_name='assignee_user_id',
+            model_name="issues",
+            old_name="assigned_user",
+            new_name="assignee_user_id",
         ),
         migrations.RenameField(
-            model_name='issues',
-            old_name='author_user',
-            new_name='author_user_id',
+            model_name="issues",
+            old_name="author_user",
+            new_name="author_user_id",
         ),
         migrations.RenameField(
-            model_name='issues',
-            old_name='project',
-            new_name='project_id',
+            model_name="issues",
+            old_name="project",
+            new_name="project_id",
         ),
     ]

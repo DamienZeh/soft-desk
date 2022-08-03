@@ -6,11 +6,19 @@ from django.contrib.auth.models import User
 
 
 class MyObtainTokenPairView(TokenObtainPairView):
+    """
+    Get token and refresh token.
+    """
+
     permission_classes = (AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
 
 
 class RegisterView(generics.CreateAPIView):
+    """
+    Allows new register for new user.
+    """
+
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer

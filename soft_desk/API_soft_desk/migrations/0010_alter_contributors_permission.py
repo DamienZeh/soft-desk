@@ -6,13 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('API_soft_desk', '0009_projects_contributor'),
+        ("API_soft_desk", "0009_projects_contributor"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contributors',
-            name='permission',
-            field=models.CharField(choices=[('lecture_seule', 'lecture_seule'), ('total', 'total')], max_length=13),
+            model_name="contributors",
+            name="permission",
+            field=models.CharField(
+                choices=[
+                    ("lecture_seule", "lecture_seule"),
+                    ("total", "total"),
+                ],
+                max_length=13,
+            ),
         ),
     ]

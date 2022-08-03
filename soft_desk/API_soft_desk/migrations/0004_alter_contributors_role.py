@@ -6,13 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('API_soft_desk', '0003_alter_contributors_role'),
+        ("API_soft_desk", "0003_alter_contributors_role"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contributors',
-            name='role',
-            field=models.CharField(choices=[('auteur', 'auteur'), ('collaborateur', 'collaborateur')], max_length=150),
+            model_name="contributors",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("auteur", "auteur"),
+                    ("collaborateur", "collaborateur"),
+                ],
+                max_length=150,
+            ),
         ),
     ]

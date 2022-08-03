@@ -1,6 +1,4 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
-from django.conf import settings
 from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -19,14 +17,21 @@ from .serializers import (
 )
 from .permissions import (
     IsAuthorOrUserAuthenticated,
-    IsContributorNotAuthorAuthenticated,
+    IsContributorAuthenticated,
     IsContributorAuthorAuthenticated,
-    IsAuthorIssueAuthenticated,
-    IsAuthorCommentAuthenticated,
+    IsAuthorCommentOrIssueAuthenticated,
 )
 
 
 class ProjectViewSet(ModelViewSet):
+    """
+    Get CRUD for a project.
+    Create if doesn't exist already with the same name.
+    Read for contributors of this project(list or detail).
+    Update if it's author of project.
+    Delete if it's author of project.
+    """
+
     permission_classes = [IsAuthenticated, IsAuthorOrUserAuthenticated]
     serializer_class = ProjectDetailSerializer
 
@@ -50,6 +55,14 @@ class ProjectViewSet(ModelViewSet):
 
 
 class ContributorsViewSet(ModelViewSet):
+    """
+    Get CRUD for Contributors.
+    Add/Create if user is not contributor already.
+    Read contributors of this project(list or detail).
+    Delete contributor if it's author of project who decide.
+    Can't delete author himself.
+    """
+
     serializer_class = ContributorDetailSerializer
 
     def get_queryset(self):
@@ -63,7 +76,7 @@ class ContributorsViewSet(ModelViewSet):
                     project_id=self.kwargs["project_pk"]
                 )
         except Contributors.DoesNotExist:
-            error_message = f"you're not contributor of this project."
+            error_message = "you're not contributor of this project."
             raise ValidationError(error_message)
 
     def get_permissions(self):
@@ -79,7 +92,7 @@ class ContributorsViewSet(ModelViewSet):
         else:
             permission_classes = [
                 IsAuthenticated,
-                IsContributorNotAuthorAuthenticated,
+                IsContributorAuthenticated,
             ]
         return [permission() for permission in permission_classes]
 
@@ -111,6 +124,14 @@ class ContributorsViewSet(ModelViewSet):
 
 
 class IssueViewSet(ModelViewSet):
+    """
+    Get CRUD for a issue in a project.
+    Create if doesn't exist already with the same name.
+    Read for contributors of this project(list or detail).
+    Update if it's author of issue.
+    Delete if it's author of issue.
+    """
+
     serializer_class = IssueDetailSerializer
 
     def get_queryset(self):
@@ -124,23 +145,23 @@ class IssueViewSet(ModelViewSet):
                     project_id=self.kwargs["project_pk"]
                 )
         except Contributors.DoesNotExist:
-            error_message = f"you're not contributor of this project."
+            error_message = "you're not contributor of this project."
             raise ValidationError(error_message)
 
     def get_permissions(self):
         if self.request.method == "POST":
             IsAuthenticated, IsContributorAuthorAuthenticated,
-            IsContributorNotAuthorAuthenticated
+            IsContributorAuthenticated
 
         if self.request.method == "DELETE" or self.request.method == "PUT":
             permission_classes = [
                 IsAuthenticated,
-                IsAuthorIssueAuthenticated,
-            ]  # il faut une permission si on est assignee ou author du pb
+                IsAuthorCommentOrIssueAuthenticated,
+            ]
         else:
             permission_classes = [
                 IsAuthenticated,
-                IsContributorNotAuthorAuthenticated,
+                IsContributorAuthenticated,
             ]
         return [permission() for permission in permission_classes]
 
@@ -151,10 +172,22 @@ class IssueViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         project = get_object_or_404(Projects, id=self.kwargs["project_pk"])
-        serializer.save(project_id=project, assignee_user_id=self.request.user)
+        serializer.save(
+            project_id=project,
+            assignee_user_id=self.request.user,
+            author_user_id=self.request.user,
+        )
 
 
 class CommentViewSet(ModelViewSet):
+    """
+    Get CRUD for a comment in an issue in a project.
+    Create if doesn't exist already with the same description.
+    Read for contributors of this project(list or detail).
+    Update if it's author of comment.
+    Delete if it's author of comment.
+    """
+
     serializer_class = CommentDetailSerializer
 
     def get_queryset(self):
@@ -165,26 +198,26 @@ class CommentViewSet(ModelViewSet):
             )
             if contributor_exist:
                 return Comments.objects.filter(
-                    project_id=self.kwargs["project_pk"]
+                    issue_id=self.kwargs["issue_pk"]
                 )
         except Contributors.DoesNotExist:
-            error_message = f"you're not contributor of this project."
+            error_message = "you're not contributor of this project."
             raise ValidationError(error_message)
 
     def get_permissions(self):
         if self.request.method == "POST":
             IsAuthenticated, IsContributorAuthorAuthenticated,
-            IsContributorNotAuthorAuthenticated
+            IsContributorAuthenticated
 
         if self.request.method == "DELETE" or self.request.method == "PUT":
             permission_classes = [
                 IsAuthenticated,
-                IsAuthorCommentAuthenticated,
-            ]  # il faut une permission si on est assignee ou author du pb
+                IsAuthorCommentOrIssueAuthenticated,
+            ]
         else:
             permission_classes = [
                 IsAuthenticated,
-                IsContributorNotAuthorAuthenticated,
+                IsContributorAuthenticated,
             ]
         return [permission() for permission in permission_classes]
 

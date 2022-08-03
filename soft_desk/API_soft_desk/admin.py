@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contributors, Projects, Issues, Comments
+from .models import Projects, Issues, Comments
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -9,7 +9,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class IssueAdmin(admin.ModelAdmin):
-    """Show project's info in admin"""
+    """Show issue's info in admin"""
 
     list_display = (
         "title",
@@ -25,7 +25,7 @@ class IssueAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    """Show project's info in admin"""
+    """Show comment's info in admin"""
 
     list_display = (
         "description",

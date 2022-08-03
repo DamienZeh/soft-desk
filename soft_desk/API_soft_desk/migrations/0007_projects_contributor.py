@@ -8,14 +8,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('auth', '0012_alter_user_first_name_max_length'),
-        ('API_soft_desk', '0006_remove_projects_contributor'),
+        ("auth", "0012_alter_user_first_name_max_length"),
+        ("API_soft_desk", "0006_remove_projects_contributor"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='projects',
-            name='contributor',
-            field=models.ManyToManyField(related_name='contributors', through='API_soft_desk.Contributors', to=settings.AUTH_USER_MODEL),
+            model_name="projects",
+            name="contributor",
+            field=models.ManyToManyField(
+                related_name="contributors",
+                through="API_soft_desk.Contributors",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

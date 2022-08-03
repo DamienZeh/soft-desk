@@ -6,6 +6,10 @@ from django.contrib.auth.password_validation import validate_password
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Serialize token.
+    """
+
     @classmethod
     def get_token(cls, user):
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
@@ -15,6 +19,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """
+    serialize data for new user.
+    """
+
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())],

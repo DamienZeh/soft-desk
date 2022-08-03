@@ -1,7 +1,4 @@
-from pyexpat import model
-from xml.etree.ElementTree import Comment
 from rest_framework import serializers
-from django.contrib.auth.models import User
 from .models import Comments, Projects, Contributors, Issues
 
 
@@ -59,15 +56,19 @@ class IssueListSerializer(serializers.ModelSerializer):
 
 
 class CommentDetailSerializer(serializers.ModelSerializer):
+    def validate_description(self, value):
+        if Comments.objects.filter(description=value).exists():
+            raise serializers.ValidationError("Category already exists")
+        return value
+
     class Meta:
         model = Comments
-        fields = [            
-            "description",      
-            "created_time"
-        ]
+        fields = ["description", "created_time"]
 
 
 class CommentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
-        fields = ["description",]
+        fields = [
+            "description",
+        ]
