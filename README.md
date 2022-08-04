@@ -13,15 +13,23 @@
 
 - Avec votre terminal, allez dans le dossier ou vous souhaitez placer le projet.<br/> 
 Exemple : ``cd C:\Users\damie\Documents\Python_Project``
-- Copiez le projet : ``git clone https://github.com/DamienZeh/LITReview.git``
-- Puis, allez dans ce projet : ``cd LITReview\``
+- Copiez le projet : ``git clone https://github.com/DamienZeh/soft-desk.git``
+- Puis, allez dans ce projet : ``cd soft-desk\``
 - puis créez l’environnement virtuel avec  ``python -m venv env``<br/>
 	_(‘env’ est le nom que j’ai sur mon environnement virtuel, il est aussi noté dans le gitignore.)_
 - Puis activez le : ``.\env\Scripts\activate`` (pour windows)<br/>
 ou ``source env\bin\activate`` (pour linux)<br/>
 	_(Vous avez maintenant un ‘(env)’ d’affiché, l'environnement est activé)_<br>
 cette commande devra être lancée à chaque redémarrage du terminal.
-- Puis, l’installation  des packages présent dans le requirements.txt:<br> ``pip install -r requirements.txt`` <br/><br>
+- Puis, l’installation  des packages présent dans le requirements.txt:<br> ``pip install -r requirements.txt``<br>
+Allez dans le dossier : ``cd soft_desk\``, et créez un fichier **.env** : ``touch .env``.<br/>
+Ouvrez **.env** avec un éditeur de texte.<br/>
+Il va falloir créer une **SECRET_KEY** et un **DEBUG**. La clé peut être la valeur que vous souhaitez,<br/> et le DEBUG doit être à **True**.
+Exemple:<br/>
+``SECRET_KEY=la_clef_est_ce_que_vous_voulez``<br/>
+``DEBUG=True``<br/>
+Enregistrez le fichier.
+<br/><br>
 
 ## Description
 
