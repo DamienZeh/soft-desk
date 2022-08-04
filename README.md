@@ -61,13 +61,10 @@ Un commentaire est juste une description.<br/><br/>
 
 ## Endpoints de l'API
 Toutes ces fonctions sont disponibles grâce à plusieurs points de terminaison d'API,<br/>
- affichés via Postman [ici](https://www.postman.com/damndamn29/workspace/softdesk/request/19809103-f8d85119-627a-465d-9dea-92b2ba617f81/)
+ affichés via Postman [**ici**](https://www.postman.com/damndamn29/workspace/softdesk/collection/19809103-b7ea621b-6461-4467-ad05-98a2677a7bdc?ctx=documentation/)
 .<br/>
  Ces 19 liens ont des exemples préremplis, d'id, étant liés à une database déjà créée, **db.sqlite3**.<br/>
  Si vous souhaitez les tester, après avoir obtenu votre premier Token, lors de la connexion(le deuxième endpoint),<br/> gardez le pour tous les autres endpoints suivants. Il est à placé dans le Bearer Token.<br/><br/>
-
-
-
 
 
 ### Vérification du code
