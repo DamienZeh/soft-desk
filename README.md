@@ -32,7 +32,7 @@ Enregistrez le fichier, et fermez le.
 
 ### Démarrage
 
-Lancez simplement le  **serveur local**, avec la commande « ``python manage.py runserver`` ».<br><br>
+Lancez le  **serveur local**( en étant dans **soft_desk** ), avec la commande « ``python manage.py runserver`` ».<br><br>
 
 ## Description de l'API
 Cette API permet de:
@@ -61,7 +61,8 @@ Un commentaire est juste une description.<br/><br/>
 
 
 ## Détail des liens de l'API
-Toutes ces fonctions sont disponibles avec plusieurs points de terminaison d'API, disponible via Postman, ici.<br/><br/>
+Toutes ces fonctions sont disponibles grâce à plusieurs points de terminaison d'API,<br/>
+ affichés via Postman ici (Il y en a 19 en tout).<br/><br/>
 
 
 
