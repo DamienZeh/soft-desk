@@ -59,10 +59,12 @@ Il pourra aussi le modifier, supprimer, tant qu'il en est l'auteur.<br/> Les aut
 Un commentaire est juste une description.<br/><br/>
 
 
-
-## Détail des liens de l'API
+## Endpoints de l'API
 Toutes ces fonctions sont disponibles grâce à plusieurs points de terminaison d'API,<br/>
- affichés via Postman ici (Il y en a 19 en tout).<br/><br/>
+ affichés via Postman [ici](https://www.postman.com/damndamn29/workspace/softdesk/request/19809103-f8d85119-627a-465d-9dea-92b2ba617f81/)
+.<br/>
+ Ces 19 liens ont des exemples préremplis, d'id, étant liés à une database déjà créée, **db.sqlite3**.<br/>
+ Si vous souhaitez les tester, après avoir obtenu votre premier Token, lors de la connexion(le deuxième endpoint),<br/> gardez le pour tous les autres endpoints suivants. Il est à placé dans le Bearer Token.<br/><br/>
 
 
 
