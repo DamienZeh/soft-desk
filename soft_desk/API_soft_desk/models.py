@@ -19,6 +19,7 @@ class Projects(models.Model):
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="author_id_project",
+        null=True,
     )
     contributor = models.ManyToManyField(
         to=settings.AUTH_USER_MODEL,
@@ -112,10 +113,15 @@ class Comments(models.Model):
 
     description = models.CharField(max_length=200)
     author_user_id = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        null=True,
     )
-    issue_id = models.ForeignKey(to=Issues, on_delete=models.CASCADE)
+    issue_id = models.ForeignKey(
+        to=Issues,
+        on_delete=models.CASCADE,
+        null=True,
+    )
     created_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:

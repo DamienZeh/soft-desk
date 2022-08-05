@@ -3,11 +3,8 @@ from .models import Comments, Projects, Contributors, Issues
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
-    author_name = serializers.CharField(
+    author_user_name = serializers.CharField(
         source="author_user_id.username", read_only=True
-    )
-    author_id = serializers.CharField(
-        source="author_user_id.id", read_only=True
     )
 
     def validate_title(self, value):
@@ -21,8 +18,8 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "type",
-            "author_name",
-            "author_id",
+            "author_user_name",
+            "author_user_id",
         ]
 
     def validate(self, attrs):
@@ -67,12 +64,10 @@ class ContributorListSerializer(serializers.ModelSerializer):
 
 
 class IssueDetailSerializer(serializers.ModelSerializer):
-    author_name = serializers.CharField(
+    author_user_name = serializers.CharField(
         source="assignee_user_id.username", read_only=True
     )
-    author_id = serializers.CharField(
-        source="author_user_id.id", read_only=True
-    )
+
 
     def validate_title(self, value):
         if Issues.objects.filter(title=value).exists():
@@ -88,8 +83,8 @@ class IssueDetailSerializer(serializers.ModelSerializer):
             "tag",
             "status",
             "created_time",
-            "author_name",
-            "author_id",
+            "author_user_name",
+            "author_user_id",
         ]
 
 
@@ -100,16 +95,12 @@ class IssueListSerializer(serializers.ModelSerializer):
 
 
 class CommentDetailSerializer(serializers.ModelSerializer):
-    author_name = serializers.CharField(
+    author_user_name = serializers.CharField(
         source="author_user_id.username", read_only=True
     )
-    author_id = serializers.CharField(
-        source="author_user_id.id", read_only=True
-    )
-    for_issue_name = serializers.CharField(
+    issue_name_response = serializers.CharField(
         source="issue_id.title", read_only=True
     )
-    for_issue_id = serializers.CharField(source="issue_id.id", read_only=True)
 
     def validate_description(self, value):
         if Comments.objects.filter(description=value).exists():
@@ -121,10 +112,10 @@ class CommentDetailSerializer(serializers.ModelSerializer):
         fields = [
             "description",
             "created_time",
-            "author_name",
-            "author_id",
-            "for_issue_name",
-            "for_issue_id",
+            "author_user_name",
+            "author_user_id",
+            "issue_name_response",
+            "issue_id",
         ]
 
 
