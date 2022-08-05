@@ -1,11 +1,17 @@
 from django.contrib import admin
-from .models import Projects, Issues, Comments
+from .models import Projects, Issues, Comments, Contributors
 
 
 class ProjectAdmin(admin.ModelAdmin):
     """Show project's info in admin"""
 
     list_display = ("title", "description", "type", "author_user_id")
+
+
+class ContributorAdmin(admin.ModelAdmin):
+    """Show contributor's info in admin"""
+
+    list_display = ("user_id", "project_id", "permission", "role")
 
 
 class IssueAdmin(admin.ModelAdmin):
@@ -36,5 +42,6 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Projects, ProjectAdmin)
+admin.site.register(Contributors, ContributorAdmin)
 admin.site.register(Issues, IssueAdmin)
 admin.site.register(Comments, CommentAdmin)
