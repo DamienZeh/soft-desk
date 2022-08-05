@@ -37,6 +37,7 @@ Lancez le  **serveur local**( en étant dans **soft_desk** ), avec la commande �
 ## Description de l'API
 Cette API permet de:
 - **De s'inscrire** et se **connecter**<br/>
+Gestion d'un utilisateur.<br/><br/>
 
 - **Gérer des projets**<br/>
 Un utilisateur, connecté, peut créer un projet, le modifier, le supprimer, tant qu'il en est l'auteur.<br/>
