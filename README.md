@@ -66,6 +66,11 @@ Toutes ces fonctions sont disponibles grâce à plusieurs points de terminaison 
  Ces 19 liens ont des exemples préremplis, d'id, étant liés à une database déjà créée, **db.sqlite3**.<br/>
  Si vous souhaitez les tester, après avoir obtenu votre premier Token, lors de la connexion(le deuxième endpoint),<br/> gardez le pour tous les autres endpoints suivants. Il est à placé dans le Bearer Token.<br/><br/>
 
+ ## Administrateur
+ Si l'utilisateur est un administrateur, il aura l'interface adequat,<br/>
+ pour gérer l'ensemble du projet. Le lien est :
+ http://127.0.0.1:8000/admin/
+
 
 ### Vérification du code
 - Pour faire un contrôle du code avec **flake8** (avec max lenght à 79, sauf pour le settings.py), tapez :<br/>
