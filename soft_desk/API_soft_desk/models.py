@@ -26,11 +26,10 @@ class Projects(models.Model):
         related_name="contributions",
     )
 
-    def __str__(self):
-        """
-        get title for show it, in admin pages
-        """
-        return self.title
+    class Meta:
+
+        verbose_name = "Project"
+        verbose_name_plural = "Projects"
 
 
 class Contributors(models.Model):
@@ -58,6 +57,11 @@ class Contributors(models.Model):
     role = models.CharField(
         max_length=150, choices=ROLE, null=False, blank=False
     )
+
+    class Meta:
+
+        verbose_name = "Contributor"
+        verbose_name_plural = "Contributors"
 
 
 class Issues(models.Model):
@@ -97,11 +101,10 @@ class Issues(models.Model):
     )
     created_time = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        """
-        get title for show it, in admin pages
-        """
-        return self.title
+    class Meta:
+
+        verbose_name = "Issue"
+        verbose_name_plural = "Issues"
 
 
 class Comments(models.Model):
@@ -115,8 +118,7 @@ class Comments(models.Model):
     issue_id = models.ForeignKey(to=Issues, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        """
-        get title for show it, in admin pages
-        """
-        return self.description
+    class Meta:
+
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
