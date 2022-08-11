@@ -2,7 +2,10 @@
 
 # API Soft-Desk
 
-- Cette API permet de remonter et de suivre des problèmes technique.<br>
+Cette API permet de remonter et de suivre des problèmes technique.<br> Les utilisateurs, une fois connectés, peuvent:<br>
+- Créer des projets
+- Y créer des problèmes liés à ces projets
+- Et créer des commentaires en réponse à ces problèmes.<br><br>
  Elle fonctionne sur un serveur local.<br><br>
 
 
@@ -27,9 +30,9 @@ cette commande devra être lancée à chaque redémarrage du terminal.
 
 
 ## Endpoints de l'API et documentation
-Tous les points de terminaison de l'API et leurs modes d'emploi sont disponibles<br/>
- sur la [**documentation**](https://documenter.getpostman.com/view/19809103/VUjQo55W), réalisée sur Postman .<br/>
- Ces 19 liens ont des exemples pré-remplis, d'id, étant liés à une database déjà créée, sur **db.sqlite3**.<br/>
+Tous les points de terminaison de l'API et leurs modes d'emploi sont disponibles
+ sur la [**documentation**](https://documenter.getpostman.com/view/19809103/VUjQo55W),<br/> réalisée sur Postman .
+ Ces 19 liens ont des exemples pré-remplis, d'id,<br/> étant liés à une database déjà créée, sur **db.sqlite3**.<br/>
 <br/>
 
  ## Administrateur
