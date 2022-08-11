@@ -2,7 +2,7 @@
 
 # API Soft-Desk
 
-Cette API permet de remonter et de suivre des problèmes technique.<br> Les utilisateurs, une fois connectés, peuvent:<br>
+Cette API permet de remonter et de suivre des problèmes techniques.<br> Les utilisateurs, une fois connectés, peuvent:<br>
 - Créer des projets
 - Y créer des problèmes liés à ces projets
 - Et créer des commentaires en réponse à ces problèmes.<br><br>
