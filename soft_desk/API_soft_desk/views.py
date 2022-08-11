@@ -41,6 +41,9 @@ class ProjectViewSet(ModelViewSet):
     def list(self, request):
         queryset = self.get_queryset()
         serializer = ProjectListSerializer(queryset, many=True)
+        if len(queryset) < 1 :
+            error_message = "You are not contributor in a project."
+            raise ValidationError(error_message)
         return Response(serializer.data)
 
     def perform_create(self, serializer):
@@ -168,6 +171,9 @@ class IssueViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = IssueListSerializer(queryset, many=True)
+        if len(queryset) < 1 :
+            error_message = "They are not issue in this project."
+            raise ValidationError(error_message)
         return Response(serializer.data)
 
     def perform_create(self, serializer):
@@ -224,6 +230,9 @@ class CommentViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = CommentListSerializer(queryset, many=True)
+        if len(queryset) < 1 :
+            error_message = "They are not comment in this issue."
+            raise ValidationError(error_message)
         return Response(serializer.data)
 
     def perform_create(self, serializer):
