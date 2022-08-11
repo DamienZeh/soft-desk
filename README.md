@@ -50,7 +50,7 @@ L'auteur d'un projet, peut ajouter ou supprimer des contributeurs pour ce même 
 - **Gérer des problèmes**<br/>
 Chaque contributeur peut ajouter un problème à un projet.<br/>
 Il pourra aussi le modifier, supprimer, tant qu'il en est l'auteur.<br/> Les autres contributeurs, ne peuvent que le lire.<br/>
-Un problème a titre, une description, une priorité(faible, moyen ou urgent),<br/>
+Un problème a un titre, une description, une priorité(faible, moyen ou urgent),<br/>
 et un status(à faire, en cours, ou terminé).<br/><br/>
 
 - **Gérer les commentaires**<br/>
@@ -61,9 +61,8 @@ Un commentaire est juste une description.<br/><br/>
 
 
 ## Endpoints de l'API
-Toutes ces fonctions sont disponibles grâce à plusieurs points de terminaison d'API,<br/>
- affichés via Postman [**sur ce lien**](https://www.postman.com/damndamn29/workspace/softdesk/folder/19809103-bbbbfe8f-c09e-44d4-b4f5-2d71389235f3?ctx=documentation/)
-.<br/>
+Tous les points de terminaison de l'API sont disponibles<br/>
+ sur la [**documentation**](https://documenter.getpostman.com/view/19809103/VUjQo55W), réalisée sur Postman .<br/>
  Ces 19 liens ont des exemples préremplis, d'id, étant liés à une database déjà créée, **db.sqlite3**.<br/>
  Si vous souhaitez les tester, après avoir obtenu votre premier Token, lors de la connexion(le deuxième endpoint),<br/> gardez le pour tous les autres endpoints suivants. Il est à placé dans le Bearer Token.<br/><br/>
 
