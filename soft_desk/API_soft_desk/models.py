@@ -59,10 +59,18 @@ class Contributors(models.Model):
         db_column="project_id",
     )
     permission = models.CharField(
-        max_length=13, choices=POSSIBILITIES, null=False, blank=False
+        max_length=13,
+        choices=POSSIBILITIES,
+        null=False,
+        blank=False,
+        default="lecture_seule",
     )
     role = models.CharField(
-        max_length=150, choices=ROLE, null=False, blank=False
+        max_length=150,
+        choices=ROLE,
+        null=False,
+        blank=False,
+        default="collaborateur",
     )
 
     class Meta:
