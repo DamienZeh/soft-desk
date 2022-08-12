@@ -40,7 +40,7 @@ Tous les points de terminaison de l'API et leurs modes d'emploi sont disponibles
  ## Administrateur
  Si l'utilisateur est un administrateur, il aura l'interface adéquat pour gérer l'ensemble du projet.<br/>
  Lancez le serveur local( en étant dans le dossier soft_desk ),<br/>
-avec la commande « python manage.py runserver ».
+avec la commande "python manage.py runserver".
  <br/> Le lien de l'interface admin est :
  http://127.0.0.1:8000/admin/
 
