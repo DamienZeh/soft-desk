@@ -9,13 +9,21 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('API_soft_desk', '0013_alter_comments_options_alter_contributors_options_and_more'),
+        (
+            "API_soft_desk",
+            "0013_alter_comments_options_alter_contributors_options_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='projects',
-            name='author_user_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='author_id_project', to=settings.AUTH_USER_MODEL, verbose_name='author_user_id'),
+            model_name="projects",
+            name="author_user_id",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="author_id_project",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="author_user_id",
+            ),
         ),
     ]

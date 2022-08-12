@@ -4,8 +4,9 @@
 
 Cette API permet de remonter et de suivre des problèmes techniques.<br> Les utilisateurs, une fois connectés, peuvent:<br>
 - Créer des projets
-- Y créer des problèmes liés à ces projets
-- Et créer des commentaires en réponse à ces problèmes.<br>
+- Y ajouter des contributeurs
+- Y créer des problèmes liés à ces projets(auteur et contributeurs)
+- Et créer des commentaires en réponse à ces problèmes(auteur et contributeurs).<br>
 
 Elle fonctionne sur un serveur local.<br><br>
 
@@ -37,7 +38,7 @@ Tous les points de terminaison de l'API et leurs modes d'emploi sont disponibles
 <br/>
 
  ## Administrateur
- Si l'utilisateur est un administrateur, il aura l'interface adequat pour gérer l'ensemble du projet.<br/>
+ Si l'utilisateur est un administrateur, il aura l'interface adéquat pour gérer l'ensemble du projet.<br/>
  Lancez le serveur local( en étant dans le dossier soft_desk ),<br/>
 avec la commande « python manage.py runserver ».
  <br/> Le lien de l'interface admin est :
@@ -46,7 +47,7 @@ avec la commande « python manage.py runserver ».
 
 ### Vérification du code
 - Pour faire un contrôle du code avec **flake8** (avec max lenght à 79, sauf pour le settings.py), tapez :<br/>
-``flake8 --max-line-length 79 --exclude=env --exclude=settings.py`` ;<br/><br/>
+``flake8 --max-line-length 79 --exclude=env,settings.py`` ;<br/><br/>
 
 ## Auteur
 

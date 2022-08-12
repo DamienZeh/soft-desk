@@ -6,23 +6,39 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('API_soft_desk', '0018_alter_comments_author_user_id_and_more'),
+        ("API_soft_desk", "0018_alter_comments_author_user_id_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contributors',
-            name='permission',
-            field=models.CharField(choices=[('lecture_seule', 'lecture_seule'), ('total', 'total')], default='lecture_seule', max_length=13),
+            model_name="contributors",
+            name="permission",
+            field=models.CharField(
+                choices=[
+                    ("lecture_seule", "lecture_seule"),
+                    ("total", "total"),
+                ],
+                default="lecture_seule",
+                max_length=13,
+            ),
         ),
         migrations.AlterField(
-            model_name='contributors',
-            name='role',
-            field=models.CharField(choices=[('auteur', 'auteur'), ('collaborateur', 'collaborateur')], default='collaborateur', max_length=150),
+            model_name="contributors",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("auteur", "auteur"),
+                    ("collaborateur", "collaborateur"),
+                ],
+                default="collaborateur",
+                max_length=150,
+            ),
         ),
         migrations.AlterField(
-            model_name='issues',
-            name='created_time',
-            field=models.DateTimeField(auto_now_add=True, verbose_name="['%Y-%m-%d %H:%M']"),
+            model_name="issues",
+            name="created_time",
+            field=models.DateTimeField(
+                auto_now_add=True, verbose_name="['%Y-%m-%d %H:%M']"
+            ),
         ),
     ]

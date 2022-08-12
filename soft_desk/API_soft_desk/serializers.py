@@ -68,7 +68,6 @@ class IssueDetailSerializer(serializers.ModelSerializer):
         source="assignee_user_id.username", read_only=True
     )
 
-
     def validate_title(self, value):
         if Issues.objects.filter(title=value).exists():
             raise serializers.ValidationError("Category already exists")
