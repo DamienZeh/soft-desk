@@ -3,7 +3,7 @@ from .models import Projects
 from rest_framework.exceptions import ValidationError
 
 
-class IsAuthorOrUserAuthenticated(BasePermission):
+class IsAuthorAuthenticated(BasePermission):
     """
     Check if is author or not.
     Allows update or delete if he's author,
@@ -60,18 +60,3 @@ class IsContributorAuthorAuthenticated(BasePermission):
         except Projects.DoesNotExist:
             error_message = "this project doesn't exist."
             raise ValidationError(error_message)
-
-
-class IsAuthorCommentOrIssueAuthenticated(BasePermission):
-    """
-    Check if user is the author of this issue or comment.
-    Allows update or delete if he's author,
-     and read and post if he's only contributor.
-    """
-
-    def has_object_permission(self, request, view, obj):
-        if request.method == "GET" or request.method == "POST":
-            return True
-        elif request.method in ["PUT", "DELETE"]:
-            if request.user == obj.author_user_id:
-                return True

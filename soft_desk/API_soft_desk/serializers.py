@@ -22,10 +22,6 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
             "author_user_id",
         ]
 
-    def validate(self, attrs):
-        attrs["author_user_id"] = self.context["request"].user.id
-        return super().validate(attrs)
-
 
 class ProjectListSerializer(serializers.ModelSerializer):
     class Meta:

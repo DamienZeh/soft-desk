@@ -16,10 +16,9 @@ from .serializers import (
     CommentDetailSerializer,
 )
 from .permissions import (
-    IsAuthorOrUserAuthenticated,
+    IsAuthorAuthenticated,
     IsContributorAuthenticated,
     IsContributorAuthorAuthenticated,
-    IsAuthorCommentOrIssueAuthenticated,
 )
 
 
@@ -32,7 +31,7 @@ class ProjectViewSet(ModelViewSet):
     Delete if it's author of project.
     """
 
-    permission_classes = [IsAuthenticated, IsAuthorOrUserAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorAuthenticated]
     serializer_class = ProjectDetailSerializer
 
     def get_queryset(self):
@@ -153,13 +152,16 @@ class IssueViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.request.method == "POST":
-            IsAuthenticated, IsContributorAuthorAuthenticated,
-            IsContributorAuthenticated
+            permission_classes = [
+                IsAuthenticated,
+                IsContributorAuthorAuthenticated,
+                IsContributorAuthenticated,
+            ]
 
         if self.request.method == "DELETE" or self.request.method == "PUT":
             permission_classes = [
                 IsAuthenticated,
-                IsAuthorCommentOrIssueAuthenticated,
+                IsAuthorAuthenticated,
             ]
         else:
             permission_classes = [
@@ -212,13 +214,16 @@ class CommentViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.request.method == "POST":
-            IsAuthenticated, IsContributorAuthorAuthenticated,
-            IsContributorAuthenticated
+            permission_classes = [
+                IsAuthenticated,
+                IsContributorAuthorAuthenticated,
+                IsContributorAuthenticated,
+            ]
 
         if self.request.method == "DELETE" or self.request.method == "PUT":
             permission_classes = [
                 IsAuthenticated,
-                IsAuthorCommentOrIssueAuthenticated,
+                IsAuthorAuthenticated,
             ]
         else:
             permission_classes = [
