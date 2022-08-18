@@ -54,6 +54,7 @@ class ProjectViewSet(ModelViewSet):
             permission="total",
         )
         contributor.save()
+        return super().perform_create(serializer)
 
 
 class ContributorsViewSet(ModelViewSet):
@@ -80,6 +81,7 @@ class ContributorsViewSet(ModelViewSet):
         except Contributors.DoesNotExist:
             error_message = "you're not contributor of this project."
             raise ValidationError(error_message)
+        return super().get_queryset()
 
     def get_permissions(self):
         if (
@@ -117,11 +119,13 @@ class ContributorsViewSet(ModelViewSet):
             raise ValidationError(error_message)
         else:
             serializer.save(project_id=project)
+        return super().perform_create(serializer)
 
     def destroy(self, request, *args, **kwargs):
         if Contributors.objects.get(pk=kwargs["pk"]).user_id == request.user:
             error_message = {"message": "You cannot delete yourself."}
             raise ValidationError(error_message)
+        # if not Issue.objects.filter(pk=issue_pk, project=project_pk).exists():
         return super().destroy(request, *args, **kwargs)
 
 
@@ -149,6 +153,7 @@ class IssueViewSet(ModelViewSet):
         except Contributors.DoesNotExist:
             error_message = "you're not contributor of this project."
             raise ValidationError(error_message)
+        return super().get_queryset()
 
     def get_permissions(self):
         if self.request.method == "POST":
@@ -185,6 +190,7 @@ class IssueViewSet(ModelViewSet):
             assignee_user_id=self.request.user,
             author_user_id=self.request.user,
         )
+        return super().perform_create(serializer)
 
 
 class CommentViewSet(ModelViewSet):
@@ -211,6 +217,7 @@ class CommentViewSet(ModelViewSet):
         except Contributors.DoesNotExist:
             error_message = "you're not contributor of this project."
             raise ValidationError(error_message)
+        return super().get_queryset()
 
     def get_permissions(self):
         if self.request.method == "POST":
@@ -243,3 +250,4 @@ class CommentViewSet(ModelViewSet):
     def perform_create(self, serializer):
         issue = get_object_or_404(Issues, id=self.kwargs["issue_pk"])
         serializer.save(issue_id=issue, author_user_id=self.request.user)
+        return super().perform_create(serializer)
