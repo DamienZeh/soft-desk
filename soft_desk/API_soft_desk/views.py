@@ -125,7 +125,7 @@ class ContributorsViewSet(ModelViewSet):
         if Contributors.objects.get(pk=kwargs["pk"]).user_id == request.user:
             error_message = {"message": "You cannot delete yourself."}
             raise ValidationError(error_message)
-        # if not Issue.objects.filter(pk=issue_pk, project=project_pk).exists():
+
         return super().destroy(request, *args, **kwargs)
 
 
