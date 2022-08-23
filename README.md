@@ -33,7 +33,7 @@ cette commande devra être lancée à chaque redémarrage du terminal.
 
 ## Endpoints de l'API et documentation
 Tous les points de terminaison de l'API et leurs modes d'emploi sont disponibles
- sur la [**documentation**](https://documenter.getpostman.com/view/19809103/VUjSG4JC),<br/> réalisée sur Postman .
+ sur la [**documentation**](https://documenter.getpostman.com/view/19809103/VUqrNcdD),<br/> réalisée sur Postman .
  Ces 19 liens ont des exemples pré-remplis, d'id,<br/> étant liés à une database déjà créée, sur **db.sqlite3**.<br/>
 <br/>
 
